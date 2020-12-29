@@ -1,10 +1,13 @@
+from typing import Any
+
 import requests
 
-class Knackt:
+
+class Knackt(object):
     """If you get simplejson.errors.JSONDecodeError it means
     token is invalid, or invalid page in API
     """
-    def __init__(self, token=None):
+    def __init__(self, token: str = None) -> None:
         """Requires an account token as usage for the API"""
 
         if token is None:
@@ -16,7 +19,7 @@ class Knackt:
             'cookie': f'token={token}' 
         } 
 
-    def categories(self):
+    def categories(self) -> Any:
         """Gets all categories"""
 
         URL = self.base + 'categories'
@@ -29,7 +32,7 @@ class Knackt:
         else:
             raise KnacktError('Invalid Key')
 
-    def category_created(self, timestamp=None):
+    def category_created(self, timestamp: str = None) -> Any:
         """Gets All Combos in the Category Which was Made at That Time
         Timestamp should be in UNIX, and as a string
         """
@@ -47,13 +50,14 @@ class Knackt:
         else:
             raise KnacktError('Invalid Key')
 
-    def download(self, combo_hash=None):
+    def download(self, combo_hash: str = None) -> Any:
         """Downloads the combo according to combo_hash
         Currently Not Working
         """
 
         if combo_hash is None:
             raise KnacktError('Enter a Hash!')
+        
         URL = self.base + 'download/' + combo_hash
         r = requests.get(URL, headers=self.headers)
 
